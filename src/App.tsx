@@ -8,9 +8,9 @@ export default function App() {
   return (
   <div className="min-h-screen bg-[url('./public/acisc-predio.jpg')] bg-no-repeat bg-cover bg-center text-slate-100">
 
-    <div className='bg-slate-800/50 backdrop-blur-lg p-6'>
+    <div className='bg-slate-800/50 backdrop-blur-lg p-4'>
 
-      <div className="flex w-1/2 rounded-t-lg bg-slate-900">
+      <div className="absolute flex w-1/2 rounded-t-lg bg-slate-900">
         <button
           type="button"
           onClick={() => setModeloAtivo('padrao')}
@@ -35,7 +35,7 @@ export default function App() {
         </button>
       </div>
 
-      <article className='bg-red-400'>
+      <article>
         {modeloAtivo === 'padrao' ? <Uniodonto /> : <Padrao /> }
         {/* {modeloAtivo === 'padrao' ? <Padrao /> : <Uniodonto />} */}
       </article>

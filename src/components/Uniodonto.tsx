@@ -4,6 +4,7 @@ import { toPng } from 'html-to-image';
 import { NumericFormat, PatternFormat } from 'react-number-format';
 import { ToothIcon, ClipboardTextIcon } from "@phosphor-icons/react";
 
+
 export function formatarMoeda(valor: string): string {
     const apenasNumeros = valor.replace(/\D/g, '');
     if (!apenasNumeros) return '';
@@ -66,7 +67,7 @@ return(
 <div>
     <div className="flex flex-col gap-8 md:flex-row justify-between rounded-xl">
 
-    <div className="w-1/2 space-y-4 bg-slate-800 p-4 border-slate-700">
+    <div className="w-1/2 space-y-4 bg-slate-800 p-6 border-slate-700">
 
     <h1 className="text-xl font-bold">Preencha os Dados da Proposta</h1>
 
@@ -186,11 +187,15 @@ return(
     </div>
 
 
-    <div className="flex flex-col w-1/2 items-center justify-center bg-slate-700/30 rounded-2xl">
-        <p className="text-xs text-slate-400 mb-6">Pré-visualização</p>
+    <div className="flex flex-col w-1/2 items-center py-4 bg-slate-700/30 rounded-2xl">
+        <p className="text-xs text-slate-400 mb-2">Pré-visualização</p>
 
-    <div ref={templateRef} className="relative h-screen overflow-hidden rounded-lg shadow-xl">
-        <img src="/modelo_uniodonto.png" alt="Modelo Base" className="w-full h-full"/>
+    <div ref={templateRef} className="relative border-slate-700 border-2 max-h-[90vh] w-auto overflow-hidden rounded-lg shadow-xl flex items-center justify-center">
+        <img 
+            src="/modelo_uniodonto.png" 
+            alt="Modelo Base" 
+            className="max-h-[90vh] w-auto object-contain" 
+        />
 
         <div className="absolute top-[13.2%] left-[29.6%] text-[#166b67] font-bold text-[13px]">
             {empresa || 'EMPRESA TESTE'}
