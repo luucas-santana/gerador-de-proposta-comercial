@@ -1,200 +1,43 @@
-
-import { useState, useRef } from 'react';
-import { toPng } from 'html-to-image';
-import { NumericFormat, PatternFormat } from 'react-number-format';
-
-export function formatarMoeda(valor: string): string {
-    const apenasNumeros = valor.replace(/\D/g, '');
-    if (!apenasNumeros) return '';
-    const valorNumero = Number(apenasNumeros) / 100;
-
-    return valorNumero.toLocaleString('pt-BR', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-    });
+interface ModeloProps {
+    templateRef: React.RefObject<HTMLDivElement | null>;
+    dados: {
+        empresa: string;
+        valorMensal: string;
+        consultor: string;
+        whatsapp: string;
+        email: string;
+    };
 }
 
-export default function PropostaPadrao() {
-    const [empresa, setEmpresa] = useState('');
-    const [valorMensal, setValorMensal] = useState('');
-    // const [valorInscricao, setValorInscricao] = useState('');
-    // const [valorMensalUniodonto, setValorMensalUniodonto] = useState('');
-    const [consultor, setConsultor] = useState('');
-    const [whatsConsultor, setWhatsConsultor] = useState('');
-    const [emailConsultor, setEmailConsultor] = useState('');
-    const [validadeProposta, setValidadeProposta] = useState('');
-
-
-
-    const hoje = new Date().toISOString().split('T')[0];
-
-    const formatarData = (dataIso: string) => {
-        if (!dataIso) return "";
-        const [ano, mes, dia] = dataIso.split("-");
-        return `${dia}/${mes}/${ano}`;
-    };
-
-    const templateRef = useRef<HTMLDivElement>(null);
-
-
-    const baixarImagemFinal = async () => {
-        if (templateRef.current === null) return;
-
-        try {
-            const larguraVisivel = templateRef.current.clientWidth;
-            
-            const larguraOriginal = 2480;
-
-            const ratio = larguraOriginal / larguraVisivel;
-
-            const dataUrl = await toPng(templateRef.current, {
-            cacheBust: true,
-            pixelRatio: ratio,
-            });
-
-            const link = document.createElement('a');
-            link.download = `Proposta_${empresa || ''}.png`;
-            link.href = dataUrl;
-            link.click();
-        } catch (err) {
-            console.error('Erro', err);
-        }
-    };
-
-
-return(
-<div>
-    <div className="flex flex-col md:flex-row justify-between text-white rounded-xl">
-
-    <div className="space-y-4 w-1/2">
-
-
-    <h1 className="text-xl font-bold mt-8">Preencha os Dados da Proposta</h1>
-
-    <div>
-        <label className="block text-sm text-slate-400 mb-1">Empresa</label>
-        <input
-        type="text"
-        value={empresa}
-        maxLength={38}
-        onChange={(e) => setEmpresa(e.target.value)}
-        className="w-full bg-slate-800 border border-slate-700 rounded p-2 text-white"
+export const Padrao = ({ templateRef, dados }: ModeloProps) => {
+    
+    return (
+    <div ref={templateRef} className="relative w-auto overflow-hidden shadow-xl flex items-center justify-center bg-white">
+        <img 
+        src="/modelo_padrao.webp" 
+        alt="Modelo Padrão" 
+        className="max-h-[80vh] w-auto object-contain block" 
         />
-    </div>
 
-    <div>
-        <label className="block text-sm text-slate-400 mb-1">Valor da Mensalidade</label>
-        <NumericFormat
-        value={valorMensal}
-        onValueChange={(values) => setValorMensal(values.formattedValue)}
-        thousandSeparator="."
-        decimalSeparator=","
-        prefix="R$ "
-        decimalScale={2}
-        maxLength={13}
-        fixedDecimalScale
-        placeholder="R$ 0,00"
-        className='w-full flex gap-2 bg-slate-800 border border-slate-700 rounded p-2 text-slate-300 font-semibold'
-        />
-    </div>
-
-    <div>
-        <label className="block text-sm text-slate-400 mb-1">Consultor Comercial</label>
-        <input
-        type='text'
-        onChange={(e) => setConsultor(e.target.value)}              
-        placeholder="Nome do Consultor"
-        className='w-full flex gap-2 bg-slate-800 border border-slate-700 rounded p-2 text-slate-300 font-semibold'
-        />
-    </div>
-
-
-    <div className='grid grid-cols-2 gap-4 w-full'>
-        <div>
-            <label className="block text-sm text-slate-400 mb-1">WhatsApp</label>
-            <PatternFormat
-            value={whatsConsultor}
-            onValueChange={(values) => setWhatsConsultor(values.formattedValue)}
-            format='(##) #####-####'
-            placeholder="(16) #####-####"
-            className='w-full bg-slate-800 border border-slate-700 rounded p-2 text-slate-300 font-semibold'
-            />
-        </div>
-            
-        <div>
-            <label className="block text-sm text-slate-400 mb-1">E-mail</label>
-            <input
-            type='email'
-            onChange={(e) => setEmailConsultor(e.target.value)}              
-            placeholder="consultor@acisc.com.br"
-            className='w-full flex gap-2 bg-slate-800 border border-slate-700 rounded p-2 text-slate-300 font-semibold'
-            />
-        </div>
-    </div>
-
-    <div className='mb-12'>
-        <label className="block text-sm text-slate-400 mb-1">Propósta Válida até</label>
-        <input
-        type={validadeProposta ? "date" : "text"}
-        min={hoje}
-        value={validadeProposta}
-        onChange={(e) => setValidadeProposta(e.target.value)}             
-        placeholder="Sem data definida"
-        onFocus={(e) => e.target.type = 'date'}
-        onBlur={(e) => {
-            if (!e.target.value) e.target.type = 'text';
-        }}
-        className='w-fit bg-slate-800 border border-slate-700 rounded p-2 text-slate-300 font-semibold'
-        />
-    </div>
-
-        <button
-        onClick={baixarImagemFinal}
-        className="w-full bg-emerald-600 hover:bg-emerald-500 active:scale-95 hover:cursor-pointer font-semibold py-2.5 rounded-lg transition"
-        >
-        Gerar Proposta
-        </button>
-
-    </div>
-
-
-    <div className="flex flex-col w-1/2 items-center justify-center">
-        <p className="text-xs text-slate-400 mb-6">Pré-visualização</p>
-
-    <div ref={templateRef} className="relative h-screen overflow-hidden rounded-lg shadow-xl">
-        <img src="/modelo_padrao.png" alt="Modelo Base" className="w-full h-full"/>
-
-        <div className="absolute top-[13.2%] left-[29.6%] text-[#166b67] font-bold text-[13px]">
-            {empresa || 'EMPRESA TESTE'}
+        <div className="absolute top-[13.2%] left-[29.6%] text-[#166b67] font-bold text-[10px]">
+            {dados.empresa || ''}
         </div>
 
-        <div className="absolute top-[44%] left-[19%] text-slate-600 font-bold text-[16px]">
-            {valorMensal ? `${valorMensal} / mês` : 'R$ -- / mês'}
+        <div className="absolute top-[44.5%] left-[19%] text-slate-600 font-bold text-[12px]">
+            {dados.valorMensal ? `${dados.valorMensal} / mês` : 'R$ -- / mês'}
         </div>
 
-        <div className="absolute top-[87.5%] left-[8%] text-[#166b67] font-bold text-[9px]">
-            {consultor ? `${consultor}` : 'Lucas Santana'}
+        <div className="absolute top-[87.5%] left-[8%] text-[#166b67] font-bold text-[8px]">
+            {dados.consultor ? `${dados.consultor}` : ''}
         </div>
 
-        <div className="absolute top-[90%] left-[10%] text-[#166b67] font-bold text-[7px]">
-            {whatsConsultor ? `${whatsConsultor}` : '16 99723 1736'}
+        <div className="absolute top-[90%] left-[10%] text-[#166b67] font-bold text-[6px]">
+            {dados.whatsapp ? `${dados.whatsapp}` : ''}
         </div>
 
-        <div className="absolute top-[92.3%] left-[10%] text-[#166b67] font-bold text-[7px]">
-            {emailConsultor ? `${emailConsultor}` : 'lucas@acisc'}
+        <div className="absolute top-[92.3%] left-[10%] text-[#166b67] font-bold text-[6px]">
+            {dados.email ? `${dados.email}` : ''}
         </div>
-
-        <div className="absolute top-[85%] left-[78%] text-[#166b67] font-bold text-[6px]">
-            {validadeProposta ? `Proposta válida até ${formatarData(validadeProposta)}` : ''}
-        </div>
-
-
-
     </div>
-
-    </div>
-
-    </div>
-</div>
-)
-}
+    );
+};
