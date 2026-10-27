@@ -22,7 +22,7 @@ export const Uniodonto = ({ templateRef, dados }: ModeloProps) => {
         />
 
         <div className="absolute top-[13.2%] left-[29.6%] text-[#166b67] font-bold text-[10px]">
-            {dados.empresa || 'EMPRESA TESTE'}
+            {dados.empresa || ''}
         </div>
 
         <div className="absolute top-[44.5%] left-[19%] text-slate-600 font-bold text-[12px]">
@@ -38,7 +38,7 @@ export const Uniodonto = ({ templateRef, dados }: ModeloProps) => {
         </div>
 
 
-        <div className="absolute top-[87.5%] left-[8%] text-[#166b67] font-bold text-[8px]">
+        <div className="absolute top-[87.7%] left-[8%] text-[#166b67] font-bold text-[8px]">
             {dados.consultor ? `${dados.consultor}` : ''}
         </div>
 

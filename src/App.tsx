@@ -71,7 +71,7 @@ export default function App() {
     <div className="min-h-screen bg-slate-900/70 backdrop-blur-sm p-6 text-slate-100 flex flex-col items-center">
 
       <div className="w-full max-w-7xl mx-auto flex flex-col lg:flex-row gap-8 items-start justify-center">
-        
+
         <div className="w-full lg:w-1/2 flex flex-col gap-6 bg-slate-900 p-6 rounded-2xl shadow-xl border border-slate-700">
           
           <div className="flex flex-col gap-1">
@@ -224,7 +224,12 @@ export default function App() {
 
             </div>
           </div>
+
+          <span className='text-[10px] font-semibold tracking-widest text-slate-500 flex flex-col items-center justify-center'>
+            Desenvolvido por Lucas Santana - 2026
+          </span>
         </div>
+
 
         <div className="w-full lg:w-1/2 flex flex-col items-center justify-center gap-6">
           
@@ -243,6 +248,7 @@ export default function App() {
             Gerar Proposta
           </button>
         </div>
+
 
       </div>
 

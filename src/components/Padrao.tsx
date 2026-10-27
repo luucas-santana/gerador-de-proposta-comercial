@@ -24,10 +24,10 @@ export const Padrao = ({ templateRef, dados }: ModeloProps) => {
         </div>
 
         <div className="absolute top-[44.5%] left-[19%] text-slate-600 font-bold text-[12px]">
-            {dados.valorMensal ? `${dados.valorMensal} / mês` : 'R$ -- / mês'}
+            {dados.valorMensal ? `${dados.valorMensal} / mês` : ''}
         </div>
 
-        <div className="absolute top-[87.5%] left-[8%] text-[#166b67] font-bold text-[8px]">
+        <div className="absolute top-[87.7%] left-[8%] text-[#166b67] font-bold text-[8px]">
             {dados.consultor ? `${dados.consultor}` : ''}
         </div>
 
