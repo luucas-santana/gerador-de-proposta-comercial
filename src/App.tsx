@@ -66,7 +66,7 @@ export default function App() {
   };
 
   return (
-  <div className="min-h-screen bg-center bg-cover bg-fixed bg-no-repeat bg-[url('./public/acisc.webp')]">
+  <div className="min-h-screen bg-center bg-cover bg-fixed bg-no-repeat bg-[url('./acisc.webp')]">
 
     <div className="min-h-screen bg-slate-900/70 backdrop-blur-sm p-6 text-slate-100 flex flex-col items-center">
 
